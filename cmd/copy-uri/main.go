@@ -5,10 +5,14 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"github.com/aaronland/gocloud-blob/copy"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
+	_ "github.com/aaronland/gocloud-blob-s3"
 	"log"
 )
 
@@ -18,6 +22,7 @@ func main() {
 	fname := flag.String("filename", "", "...")
 	bucket_uri := flag.String("bucket-uri", "", "...")
 	show_progress := flag.Bool("show-progress", false, "...")
+	acl := flag.String("acl", "", "...")
 
 	flag.Parse()
 
@@ -33,6 +38,26 @@ func main() {
 		Bucket:       bucket,
 		Filename:     *fname,
 		ShowProgress: *show_progress,
+	}
+
+	if *acl != "" {
+
+		before := func(asFunc func(interface{}) bool) error {
+
+			req := &s3manager.UploadInput{}
+			ok := asFunc(&req)
+
+			if !ok {
+				return fmt.Errorf("Not an S3 type")
+			}
+
+			req.ACL = aws.String(*acl)
+			return nil
+		}
+
+		opts.WriterOptions = &blob.WriterOptions{
+			BeforeWrite: before,
+		}
 	}
 
 	err = copy.CopyURLStringToBucket(ctx, opts, *uri)
