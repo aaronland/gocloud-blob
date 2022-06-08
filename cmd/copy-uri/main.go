@@ -6,13 +6,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	_ "github.com/aaronland/gocloud-blob-s3"
 	"github.com/aaronland/gocloud-blob/copy"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"gocloud.dev/blob"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
-	_ "github.com/aaronland/gocloud-blob-s3"
 	"log"
 )
 
