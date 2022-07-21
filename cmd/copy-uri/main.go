@@ -23,6 +23,7 @@ func main() {
 	bucket_uri := flag.String("bucket-uri", "", "...")
 	show_progress := flag.Bool("show-progress", false, "...")
 	acl := flag.String("acl", "", "...")
+	part_size := flag.Int64("part-size", 0, "...")
 
 	flag.Parse()
 
@@ -40,18 +41,34 @@ func main() {
 		ShowProgress: *show_progress,
 	}
 
-	if *acl != "" {
+	if *acl != "" || *part_size != 0 {
 
 		before := func(asFunc func(interface{}) bool) error {
 
-			req := &s3manager.UploadInput{}
-			ok := asFunc(&req)
+			if *acl != "" {
 
-			if !ok {
-				return fmt.Errorf("Not an S3 type")
+				input := &s3manager.UploadInput{}
+				ok := asFunc(&input)
+
+				if !ok {
+					return fmt.Errorf("Not an S3 type")
+				}
+
+				input.ACL = aws.String(*acl)
 			}
 
-			req.ACL = aws.String(*acl)
+			if *part_size != 0 {
+
+				uploader := &s3manager.Uploader{}
+				ok := asFunc(&uploader)
+
+				if !ok {
+					return fmt.Errorf("Not an S3 type")
+				}
+
+				uploader.PartSize = *part_size
+			}
+
 			return nil
 		}
 

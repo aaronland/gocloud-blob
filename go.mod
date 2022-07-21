@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/aaronland/gocloud-blob-s3 v0.2.0
-	github.com/aws/aws-sdk-go v1.44.29
+	github.com/aws/aws-sdk-go v1.44.60
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
 	gocloud.dev v0.25.0
 )
