@@ -18,9 +18,9 @@ import (
 
 func main() {
 
-	uri := flag.String("uri", "", "...")
+	source_uri := flag.String("source-uri", "", "...")
 	fname := flag.String("filename", "", "...")
-	bucket_uri := flag.String("bucket-uri", "", "...")
+	target_uri := flag.String("target-uri", "", "...")
 	show_progress := flag.Bool("show-progress", false, "...")
 	acl := flag.String("acl", "", "...")
 	part_size := flag.Int64("part-size", 0, "...")
@@ -29,10 +29,10 @@ func main() {
 
 	ctx := context.Background()
 
-	bucket, err := blob.OpenBucket(ctx, *bucket_uri)
+	bucket, err := blob.OpenBucket(ctx, *target_uri)
 
 	if err != nil {
-		log.Fatalf("Failed to open bucket, %v", err)
+		log.Fatalf("Failed to open bucket '%s', %v", *target_uri, err)
 	}
 
 	opts := &copy.CopyURLOptions{
@@ -77,7 +77,7 @@ func main() {
 		}
 	}
 
-	err = copy.CopyURLStringToBucket(ctx, opts, *uri)
+	err = copy.CopyURLStringToBucket(ctx, opts, *source_uri)
 
 	if err != nil {
 		log.Fatalf("Failed to copy URL to bucket, %v", err)
