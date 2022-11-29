@@ -42,12 +42,28 @@ func CopyURLToBucket(ctx context.Context, opts *CopyURLOptions, u *url.URL) erro
 	fname := opts.Filename
 
 	if fname == "" {
-		filepath.Base(u.Path)
+		fname = filepath.Base(u.Path)
 	}
 
 	uri := u.String()
 
-	rsp, err := http.Get(uri)
+	cl := &http.Client{}
+
+	if u.Scheme == "file" {
+
+		uri_dir := filepath.Dir(u.Path)
+		uri_fname := filepath.Base(u.Path)
+
+		tr := &http.Transport{}
+		tr.RegisterProtocol("file", http.NewFileTransport(http.Dir(uri_dir)))
+
+		cl = &http.Client{Transport: tr}
+
+		u.Path = uri_fname
+		uri = u.String()
+	}
+
+	rsp, err := cl.Get(uri)
 
 	if err != nil {
 		return fmt.Errorf("Failed to GET %s, %w", uri, err)
