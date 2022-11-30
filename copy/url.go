@@ -59,7 +59,7 @@ func CopyURLToBucket(ctx context.Context, opts *CopyURLOptions, u *url.URL) erro
 
 		cl = &http.Client{Transport: tr}
 
-		u.Path = uri_fname
+		u.Path = fmt.Sprintf("/%s", uri_fname)
 		uri = u.String()
 	}
 
