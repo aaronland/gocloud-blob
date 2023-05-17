@@ -4,8 +4,9 @@ package walk
 import (
 	"context"
 	"fmt"
-	"gocloud.dev/blob"
 	"io"
+
+	"gocloud.dev/blob"	
 )
 
 // WalkBucketCallback is a custom function for processing a `blob.ListObject` instance, used by the `WalkBucket` method.

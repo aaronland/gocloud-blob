@@ -3,8 +3,9 @@ package clone
 import (
 	"context"
 	"fmt"
-	gc_blob "gocloud.dev/blob"
 	"io"
+
+	gc_blob "gocloud.dev/blob"	
 )
 
 // Clone copies 'source_uri' from 'source_bucket' to 'target_uri' in 'target_bucket'.

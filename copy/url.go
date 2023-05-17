@@ -3,13 +3,14 @@ package copy
 import (
 	"context"
 	"fmt"
-	"github.com/mitchellh/ioprogress"
-	"gocloud.dev/blob"
 	"io"
 	"net/http"
 	"net/url"
 	"path/filepath"
 	"strconv"
+
+	"github.com/mitchellh/ioprogress"
+	"gocloud.dev/blob"	
 )
 
 type CopyURLOptions struct {

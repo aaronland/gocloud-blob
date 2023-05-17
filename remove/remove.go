@@ -3,10 +3,11 @@ package remove
 import (
 	"context"
 	_ "fmt"
-	"gocloud.dev/blob"
 	"io"
 	"log"
 	"strings"
+
+	"gocloud.dev/blob"	
 )
 
 // RemoveTree will remove 'uri' and all its contents from bucket 'b'.
