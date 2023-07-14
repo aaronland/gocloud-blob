@@ -10,7 +10,7 @@ import (
 	"strconv"
 
 	"github.com/mitchellh/ioprogress"
-	"gocloud.dev/blob"	
+	"gocloud.dev/blob"
 )
 
 type CopyURLOptions struct {

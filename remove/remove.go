@@ -7,7 +7,7 @@ import (
 	"log"
 	"strings"
 
-	"gocloud.dev/blob"	
+	"gocloud.dev/blob"
 )
 
 // RemoveTree will remove 'uri' and all its contents from bucket 'b'.

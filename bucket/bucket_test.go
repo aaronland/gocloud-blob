@@ -6,7 +6,7 @@ import (
 
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
-	_ "gocloud.dev/blob/s3blob"	
+	_ "gocloud.dev/blob/s3blob"
 )
 
 func TestOpenBucket(t *testing.T) {

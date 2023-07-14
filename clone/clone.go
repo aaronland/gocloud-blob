@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	gc_blob "gocloud.dev/blob"	
+	gc_blob "gocloud.dev/blob"
 )
 
 // Clone copies 'source_uri' from 'source_bucket' to 'target_uri' in 'target_bucket'.
