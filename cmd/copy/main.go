@@ -8,6 +8,7 @@ import (
 	"log"
 
 	_ "github.com/aaronland/gocloud-blob-s3"
+	"github.com/aaronland/gocloud-blob/bucket"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"gocloud.dev/blob"
@@ -30,7 +31,7 @@ func main() {
 
 	ctx := context.Background()
 
-	source_bucket, err := blob.OpenBucket(ctx, *source_uri)
+	source_bucket, err := bucket.OpenBucket(ctx, *source_uri)
 
 	if err != nil {
 		log.Fatalf("Failed to open source bucket '%s', %v", *source_uri, err)
@@ -38,7 +39,7 @@ func main() {
 
 	defer source_bucket.Close()
 
-	target_bucket, err := blob.OpenBucket(ctx, *target_uri)
+	target_bucket, err := bucket.OpenBucket(ctx, *target_uri)
 
 	if err != nil {
 		log.Fatalf("Failed to open target bucket '%s', %v", *target_uri, err)
