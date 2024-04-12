@@ -2,11 +2,14 @@
 // in a blob.Bucket endpoint.
 package main
 
+// ./bin/copy-uri -source-uri https://static.sfomuseum.org/media/189/736/720/3/1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg -target-uri cwd:// -filename test.jpg
+
 import (
 	"context"
 	"fmt"
 	"log"
-
+	"path/filepath"
+	
 	_ "github.com/aaronland/gocloud-blob-s3"
 	"github.com/aaronland/gocloud-blob/bucket"
 	"github.com/aaronland/gocloud-blob/copy"
@@ -102,6 +105,11 @@ func main() {
 	}
 
 	run := func(ctx context.Context, opts *copy.CopyURLOptions, source string) error {
+
+		if opts.Filename == "" {
+			opts.Filename = filepath.Base(source)
+		}
+		
 		return copy.CopyURLStringToBucket(ctx, opts, source)
 	}
 
