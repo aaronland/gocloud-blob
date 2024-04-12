@@ -4,8 +4,10 @@ go 1.22.2
 
 require (
 	github.com/aaronland/gocloud-blob-s3 v0.2.4
+	github.com/aws/aws-lambda-go v1.46.0
 	github.com/aws/aws-sdk-go v1.51.19
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
+	github.com/sfomuseum/go-flags v0.10.0
 	github.com/whosonfirst/go-ioutil v1.0.2
 	gocloud.dev v0.37.0
 )
