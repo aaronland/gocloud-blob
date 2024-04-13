@@ -2,6 +2,70 @@
 
 Opinionated methods and tools for working with gocloud.dev/blob instances.
 
+## Documentation
+
+Documentation is incomplete at this time.
+
+## Tools
+
+```
+$> make cli
+go build -mod vendor -ldflags="-s -w" -o bin/copy-uri cmd/copy-uri/main.go
+go build -mod vendor -ldflags="-s -w" -o bin/copy cmd/copy/main.go
+```
+
+### copy-uri
+
+```
+$> ./bin/copy-uri \
+	-source-uri https://static.sfomuseum.org/media/189/736/720/3/1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg \
+	-target-uri cwd://
+
+$> ll 1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg 
+-rw-r--r--  1 user  staff  342776 Apr 12 17:00 1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg
+```
+
+#### Lambda
+
+The `copy-uri` can also be run as a Lambda function.
+
+```
+$> make lambda
+if test -f bootstrap; then rm -f bootstrap; fi
+if test -f copy_uri.zip; then rm -f copy_uri.zip; fi
+GOARCH=arm64 GOOS=linux go build -mod vendor -ldflags="" -tags lambda.norpc -o bootstrap cmd/copy-uri/main.go
+zip copy_uri.zip bootstrap
+  adding: bootstrap (deflated 62%)
+rm -f bootstrap
+```
+
+Install and configure the Lambda function as necessary. The following environment variables need to be configured:
+
+| Key | Value | Notes |
+| --- | --- | --- |
+| BLOB_MODE | lambda | |
+| BLOB_TARGET_URI | | A valid `gocloud.dev/blob` URI. For example `s3blob://{S3_BUCKET}?region={S3_REGION}&prefix={S3_PREFIX}/&credentials={CREDENTIALS}`
+
+If you are using the `s3blob://` URI scheme `{CREDENTIALS}` is expected to be a [aaronland/go-aws-session](https://github.com/aaronland/go-aws-session) credentials string:
+
+
+| Label | Description |
+| --- | --- |
+| `anon:` | Empty or anonymous credentials. |
+| `env:` | Read credentials from AWS defined environment variables. |
+| `iam:` | Assume AWS IAM credentials are in effect. |
+| `sts:{ARN}` | Assume the role defined by `{ARN}` using STS credentials. |
+| `{AWS_PROFILE_NAME}` | This this profile from the default AWS credentials location. |
+| `{AWS_CREDENTIALS_PATH}:{AWS_PROFILE_NAME}` | This this profile from a user-defined AWS credentials location. |
+
+Environment variables are mapped to command line flags as followed. For any given command line flag it is:
+
+* Upper-cased
+* Spaces are replaced with "_" characters
+* The final string is prepended with "BLOB_"
+
+For example the `-target-uri` flag becomes the `BLOB_TARGET_URI` environment variable.
+
 ## See also
 
 * https://pkg.go.dev/gocloud.dev/blob
