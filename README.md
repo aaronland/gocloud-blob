@@ -66,6 +66,22 @@ Environment variables are mapped to command line flags as followed. For any give
 
 For example the `-target-uri` flag becomes the `BLOB_TARGET_URI` environment variable.
 
+#### Docker
+
+```
+$> make docker
+docker buildx build --platform=linux/amd64 -t gocloud-blob .
+[+] Building 36.1s (14/14) FINISHED                                                                                                                              docker:deskt         
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/jvr88erchuxoddhbwdhwv7xap
+```
+
+```
+$> docker run --platform=linux/amd64 gocloud-blob \
+	/usr/local/bin/copy-uri \
+	-source-uri https://static.sfomuseum.org/media/189/736/720/3/1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg \
+	-target-uri file:///tmp/
+```
+
 ## See also
 
 * https://pkg.go.dev/gocloud.dev/blob
