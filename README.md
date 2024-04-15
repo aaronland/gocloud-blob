@@ -14,7 +14,46 @@ go build -mod vendor -ldflags="-s -w" -o bin/copy-uri cmd/copy-uri/main.go
 go build -mod vendor -ldflags="-s -w" -o bin/copy cmd/copy/main.go
 ```
 
+### copy
+
+```
+$> ./bin/copy -h
+Usage of ./bin/copy:
+  -acl string
+    	An optional AWS S3 ACL to assign to the file being copied.
+  -part-size aws/aws-sdk-go/service/s3/s3manager
+    	The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the aws/aws-sdk-go/service/s3/s3manager package will be used.
+  -source-path -source-uri
+    	The path (relative to -source-uri) for the file to copy.
+  -source-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+  -target-path -target-uri
+    	The path (relative to -target-uri) where the target file should be copied.
+  -target-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+```
+
 ### copy-uri
+
+```
+$> ./bin/copy-uri -h
+  -acl string
+    	An optional AWS S3 ACL to assign to the file being copied.
+  -filename -source-uri
+    	The final filename of the file to copy. If empty the basename of the -source-uri flag value will be used.
+  -mode string
+    	Valid options are: cli, lambda. (default "cli")
+  -part-size aws/aws-sdk-go/service/s3/s3manager
+    	The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the aws/aws-sdk-go/service/s3/s3manager package will be used.
+  -show-progress
+    	Show copy progress.
+  -source-uri string
+    	The URI of the file to copy.
+  -target-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+```
+
+For example:
 
 ```
 $> ./bin/copy-uri \
