@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
-	
+
 	_ "github.com/aaronland/gocloud-blob-s3"
 	"github.com/aaronland/gocloud-blob/bucket"
 	"github.com/aaronland/gocloud-blob/copy"
@@ -34,15 +34,16 @@ func main() {
 
 	fs := flagset.NewFlagSet("copy")
 
-	fs.StringVar(&source_uri, "source-uri", "", "...")
-	fs.StringVar(&target_uri, "target-uri", "", "...")
+	fs.StringVar(&source_uri, "source-uri", "", "The URI of the file to copy.")
+	fs.StringVar(&target_uri, "target-uri", "", "A valid gocloud.dev/blob.Bucket URI.")
 
-	fs.StringVar(&filename, "filename", "", "...")
+	fs.StringVar(&filename, "filename", "", "The final filename of the file to copy. If empty the basename of the `-source-uri` flag value will be used.")
 
-	fs.BoolVar(&show_progress, "show-progress", false, "...")
-	fs.StringVar(&acl, "acl", "", "...")
-	fs.Int64Var(&part_size, "part-size", 0, "...")
-	fs.StringVar(&mode, "mode", "cli", "...")
+	fs.StringVar(&acl, "acl", "", "An optional AWS S3 ACL to assign to the file being copied.")
+	fs.Int64Var(&part_size, "part-size", 0, "The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the `aws/aws-sdk-go/service/s3/s3manager` package will be used.")
+
+	fs.BoolVar(&show_progress, "show-progress", false, "Show copy progress.")	
+	fs.StringVar(&mode, "mode", "cli", "Valid options are: cli, lambda.")
 
 	flagset.Parse(fs)
 
@@ -109,7 +110,7 @@ func main() {
 		if opts.Filename == "" {
 			opts.Filename = filepath.Base(source)
 		}
-		
+
 		return copy.CopyURLStringToBucket(ctx, opts, source)
 	}
 

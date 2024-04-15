@@ -1,8 +1,14 @@
 GOMOD=$(shell test -f "go.work" && echo "readonly" || echo "vendor")
+LDFLAGS=-s -w
+
+DOCKER_ARGS=--platform=linux/amd64
 
 cli:
-	go build -mod $(GOMOD) -ldflags="-s -w" -o bin/copy-uri cmd/copy-uri/main.go
-	go build -mod $(GOMOD) -ldflags="-s -w" -o bin/copy cmd/copy/main.go
+	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/copy-uri cmd/copy-uri/main.go
+	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/copy cmd/copy/main.go
+
+docker:
+	docker buildx build $(DOCKER_ARGS) -t gocloud-blob .
 
 lambda:
 	@make lambda-copy-uri

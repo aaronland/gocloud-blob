@@ -14,7 +14,46 @@ go build -mod vendor -ldflags="-s -w" -o bin/copy-uri cmd/copy-uri/main.go
 go build -mod vendor -ldflags="-s -w" -o bin/copy cmd/copy/main.go
 ```
 
+### copy
+
+```
+$> ./bin/copy -h
+Usage of ./bin/copy:
+  -acl string
+    	An optional AWS S3 ACL to assign to the file being copied.
+  -part-size aws/aws-sdk-go/service/s3/s3manager
+    	The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the aws/aws-sdk-go/service/s3/s3manager package will be used.
+  -source-path -source-uri
+    	The path (relative to -source-uri) for the file to copy.
+  -source-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+  -target-path -target-uri
+    	The path (relative to -target-uri) where the target file should be copied.
+  -target-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+```
+
 ### copy-uri
+
+```
+$> ./bin/copy-uri -h
+  -acl string
+    	An optional AWS S3 ACL to assign to the file being copied.
+  -filename -source-uri
+    	The final filename of the file to copy. If empty the basename of the -source-uri flag value will be used.
+  -mode string
+    	Valid options are: cli, lambda. (default "cli")
+  -part-size aws/aws-sdk-go/service/s3/s3manager
+    	The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the aws/aws-sdk-go/service/s3/s3manager package will be used.
+  -show-progress
+    	Show copy progress.
+  -source-uri string
+    	The URI of the file to copy.
+  -target-uri string
+    	A valid gocloud.dev/blob.Bucket URI.
+```
+
+For example:
 
 ```
 $> ./bin/copy-uri \
@@ -65,6 +104,22 @@ Environment variables are mapped to command line flags as followed. For any give
 * The final string is prepended with "BLOB_"
 
 For example the `-target-uri` flag becomes the `BLOB_TARGET_URI` environment variable.
+
+#### Docker
+
+```
+$> make docker
+docker buildx build --platform=linux/amd64 -t gocloud-blob .
+[+] Building 36.1s (14/14) FINISHED                                                                                                                              docker:deskt         
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/jvr88erchuxoddhbwdhwv7xap
+```
+
+```
+$> docker run --platform=linux/amd64 gocloud-blob \
+	/usr/local/bin/copy-uri \
+	-source-uri https://static.sfomuseum.org/media/189/736/720/3/1897367203_lt3HuJ5ALbY4SDoxTd4oi7abOF7gQZKM_c.jpg \
+	-target-uri file:///tmp/
+```
 
 ## See also
 

@@ -18,14 +18,14 @@ import (
 
 func main() {
 
-	source_uri := flag.String("source-uri", "", "...")
-	target_uri := flag.String("target-uri", "", "...")
+	source_uri := flag.String("source-uri", "", "A valid gocloud.dev/blob.Bucket URI.")
+	target_uri := flag.String("target-uri", "", "A valid gocloud.dev/blob.Bucket URI.")
+	
+	source_path := flag.String("source-path", "", "The path (relative to `-source-uri`) for the file to copy.")
+	target_path := flag.String("target-path", "", "The path (relative to `-target-uri`) where the target file should be copied.")
 
-	source_path := flag.String("source-path", "", "...")
-	target_path := flag.String("target-path", "", "...")
-
-	acl := flag.String("acl", "", "...")
-	part_size := flag.Int64("part-size", 0, "...")
+	acl := flag.String("acl", "", "An optional AWS S3 ACL to assign to the file being copied.")
+	part_size := flag.Int64("part-size", 0, "The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the `aws/aws-sdk-go/service/s3/s3manager` package will be used.")
 
 	flag.Parse()
 
