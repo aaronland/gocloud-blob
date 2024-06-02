@@ -20,7 +20,7 @@ func main() {
 
 	source_uri := flag.String("source-uri", "", "A valid gocloud.dev/blob.Bucket URI.")
 	target_uri := flag.String("target-uri", "", "A valid gocloud.dev/blob.Bucket URI.")
-	
+
 	source_path := flag.String("source-path", "", "The path (relative to `-source-uri`) for the file to copy.")
 	target_path := flag.String("target-path", "", "The path (relative to `-target-uri`) where the target file should be copied.")
 

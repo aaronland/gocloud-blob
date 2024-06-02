@@ -42,7 +42,7 @@ func main() {
 	fs.StringVar(&acl, "acl", "", "An optional AWS S3 ACL to assign to the file being copied.")
 	fs.Int64Var(&part_size, "part-size", 0, "The buffer size (in bytes) to use when buffering data into chunks and sending them as parts to S3. If 0 the default value for the `aws/aws-sdk-go/service/s3/s3manager` package will be used.")
 
-	fs.BoolVar(&show_progress, "show-progress", false, "Show copy progress.")	
+	fs.BoolVar(&show_progress, "show-progress", false, "Show copy progress.")
 	fs.StringVar(&mode, "mode", "cli", "Valid options are: cli, lambda.")
 
 	flagset.Parse(fs)
