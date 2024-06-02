@@ -4,7 +4,7 @@ import (
 	"context"
 	_ "fmt"
 	"io"
-	"log"
+	"log/slog"
 	"strings"
 
 	"gocloud.dev/blob"
@@ -46,10 +46,13 @@ func RemoveTree(ctx context.Context, b *blob.Bucket, uri string) error {
 			// trailing slashes confuse Go Cloud...
 
 			path := strings.TrimRight(obj.Key, "/")
+			slog.Info("Delete key", "path", path)
+			continue
+
 			err = b.Delete(ctx, path)
 
 			if err != nil {
-				log.Printf("Failed to remove '%s', %v", path, err)
+				slog.Error("Failed to delete key", "path", path, "error", err)
 			}
 		}
 

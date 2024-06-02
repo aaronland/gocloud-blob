@@ -2,37 +2,24 @@ package main
 
 import (
 	"context"
-	"flag"
-	"log"
+	"log/slog"
+	"os"
 
-	"github.com/aaronland/gocloud-blob/bucket"
-	"github.com/aaronland/gocloud-blob/remove"
+	_ "github.com/aaronland/gocloud-blob-s3"
+	"github.com/aaronland/gocloud-blob/app/rmdir"
+	_ "gocloud.dev/blob/fileblob"
 )
 
 func main() {
 
-	var bucket_uri string
-	var path string
-
-	flag.StringVar(&bucket_uri, "bucket-uri", "", "...")
-	flag.StringVar(&path, "path", ".", "...")
-
-	flag.Parse()
-
 	ctx := context.Background()
+	logger := slog.Default()
 
-	b, err := bucket.OpenBucket(ctx, bucket_uri)
-
-	if err != nil {
-		log.Fatalf("Failed to open bucket, %v", err)
-	}
-
-	defer b.Close()
-
-	err = remove.RemoveTree(ctx, b, path)
+	err := rmdir.Run(ctx, logger)
 
 	if err != nil {
-		log.Fatalf("Failed to remove tree for %s, %v", path, err)
+		logger.Error("Failed to run rmdir application", "error", err)
+		os.Exit(1)
 	}
 
 }

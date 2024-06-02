@@ -6,6 +6,7 @@ DOCKER_ARGS=--platform=linux/amd64
 cli:
 	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/copy-uri cmd/copy-uri/main.go
 	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/copy cmd/copy/main.go
+	go build -mod $(GOMOD) -ldflags="$(LDFLAGS)" -o bin/rmdir cmd/rmdir/main.go
 
 docker:
 	docker buildx build $(DOCKER_ARGS) -t gocloud-blob .
