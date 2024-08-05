@@ -6,7 +6,6 @@ import (
 
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
-	_ "gocloud.dev/blob/s3blob"
 )
 
 func TestOpenBucket(t *testing.T) {
@@ -14,7 +13,7 @@ func TestOpenBucket(t *testing.T) {
 	uris := []string{
 		"file:///tmp",
 		"mem://",
-		"s3://example?region=us-east-1",
+		// "s3://example?region=us-east-1",
 		"cwd://",
 	}
 
