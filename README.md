@@ -12,6 +12,7 @@ Documentation is incomplete at this time.
 $> make cli
 go build -mod vendor -ldflags="-s -w" -o bin/copy-uri cmd/copy-uri/main.go
 go build -mod vendor -ldflags="-s -w" -o bin/copy cmd/copy/main.go
+go build -mod vendor -ldflags="-s -w" -o bin/read cmd/read/main.go
 ```
 
 ### copy

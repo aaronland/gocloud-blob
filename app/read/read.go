@@ -8,9 +8,9 @@ import (
 	"os"
 
 	"github.com/aaronland/gocloud-blob/bucket"
+	"github.com/sfomuseum/go-flags/flagset"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
-	"github.com/sfomuseum/go-flags/flagset"
 )
 
 func Run(ctx context.Context) error {

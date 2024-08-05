@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	
+
 	"github.com/aaronland/gocloud-blob/app/read"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
