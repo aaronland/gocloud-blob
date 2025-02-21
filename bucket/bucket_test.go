@@ -3,9 +3,11 @@ package bucket
 import (
 	"context"
 	"testing"
-
+	"fmt"
+	
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
+	_ "github.com/aaronland/gocloud-blob/s3"
 )
 
 func TestOpenBucket(t *testing.T) {
@@ -21,10 +23,14 @@ func TestOpenBucket(t *testing.T) {
 
 		ctx := context.Background()
 
-		_, err := OpenBucket(ctx, uri)
+		b, err := OpenBucket(ctx, uri)
 
 		if err != nil {
 			t.Fatalf("Failed to create bucket for '%s', %v", uri, err)
 		}
+
+		defer b.Close()
+		
+		fmt.Printf("Opened %s\n", uri)
 	}
 }
