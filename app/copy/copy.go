@@ -30,7 +30,19 @@ func RunWithFlagSet(ctx context.Context, fs *flag.FlagSet) error {
 
 func RunWithOptions(ctx context.Context, opts *RunOptions) error {
 
-	source_bucket, err := bucket.OpenBucket(ctx, opts.SourceBucketURI)
+	source_bucket_uri, source_path, err := bucket.ParseURI(opts.Source)
+
+	if err != nil {
+		return fmt.Errorf("Failed to parse source, %w", err)
+	}
+
+	target_bucket_uri, target_path, err := bucket.ParseURI(opts.Target)
+
+	if err != nil {
+		return fmt.Errorf("Failed to parse target, %w", err)
+	}
+
+	source_bucket, err := bucket.OpenBucket(ctx, source_bucket_uri)
 
 	if err != nil {
 		return fmt.Errorf("Failed to open source bucket, %w", err)
@@ -38,7 +50,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions) error {
 
 	defer source_bucket.Close()
 
-	target_bucket, err := bucket.OpenBucket(ctx, opts.TargetBucketURI)
+	target_bucket, err := bucket.OpenBucket(ctx, target_bucket_uri)
 
 	if err != nil {
 		return fmt.Errorf("Failed to open target bucket, %w", err)
@@ -46,7 +58,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions) error {
 
 	defer target_bucket.Close()
 
-	source_r, err := source_bucket.NewReader(ctx, opts.SourcePath, nil)
+	source_r, err := source_bucket.NewReader(ctx, source_path, nil)
 
 	if err != nil {
 		return fmt.Errorf("Failed to create new reader, %w", err)
@@ -77,7 +89,7 @@ func RunWithOptions(ctx context.Context, opts *RunOptions) error {
 		opts.WriterOptions.BeforeWrite = before
 	}
 
-	target_wr, err := target_bucket.NewWriter(ctx, opts.TargetPath, opts.WriterOptions)
+	target_wr, err := target_bucket.NewWriter(ctx, target_path, opts.WriterOptions)
 
 	if err != nil {
 		return fmt.Errorf("Failed to create new writer, %w", err)

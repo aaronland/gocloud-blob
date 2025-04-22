@@ -6,9 +6,9 @@ toolchain go1.24.0
 
 require (
 	github.com/aaronland/go-aws-auth v1.7.0
-	github.com/aws/aws-lambda-go v1.47.0
+	github.com/aws/aws-lambda-go v1.48.0
 	github.com/aws/aws-sdk-go-v2 v1.36.3
-	github.com/aws/aws-sdk-go-v2/service/s3 v1.79.0
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.79.2
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/whosonfirst/go-ioutil v1.0.2

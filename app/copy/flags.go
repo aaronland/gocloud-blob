@@ -6,11 +6,8 @@ import (
 	"github.com/sfomuseum/go-flags/flagset"
 )
 
-var source_bucket_uri string
-var source_path string
-
-var target_bucket_uri string
-var target_path string
+var source string
+var target string
 
 var str_acl string
 
@@ -18,13 +15,9 @@ func DefaultFlagSet() *flag.FlagSet {
 
 	fs := flagset.NewFlagSet("copy")
 
-	fs.StringVar(&source_bucket_uri, "source-uri", "", "...")
-	fs.StringVar(&source_path, "source-path", "", "...")
-
-	fs.StringVar(&target_bucket_uri, "target-uri", "", "...")
-	fs.StringVar(&target_path, "target-path", "", "...")
-
-	fs.StringVar(&str_acl, "acl", "", "...")
+	fs.StringVar(&source, "source", "", "The fully-qualified URI for the source file (this will be parsed in to a gocloud.dev/blob.Bucket URI and filename).")
+	fs.StringVar(&target, "target", "", "The fully-qualified URI for the target file (this will be parsed in to a gocloud.dev/blob.Bucket URI and filename).")
+	fs.StringVar(&str_acl, "acl", "", "An optional AWS S3 ACL to assign to the file being copied.")
 
 	return fs
 }

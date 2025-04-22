@@ -2,12 +2,12 @@ package bucket
 
 import (
 	"context"
-	"testing"
 	"fmt"
-	
+	"testing"
+
+	_ "github.com/aaronland/gocloud-blob/s3"
 	_ "gocloud.dev/blob/fileblob"
 	_ "gocloud.dev/blob/memblob"
-	_ "github.com/aaronland/gocloud-blob/s3"
 )
 
 func TestOpenBucket(t *testing.T) {
@@ -30,7 +30,7 @@ func TestOpenBucket(t *testing.T) {
 		}
 
 		defer b.Close()
-		
+
 		fmt.Printf("Opened %s\n", uri)
 	}
 }

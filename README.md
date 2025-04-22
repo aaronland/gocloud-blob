@@ -19,17 +19,20 @@ go build -mod vendor -ldflags="-s -w" -o bin/read cmd/read/main.go
 
 ```
 $> ./bin/copy -h
-Usage of ./bin/copy:
   -acl string
     	An optional AWS S3 ACL to assign to the file being copied.
-  -source-path -source-uri
-    	The path (relative to -source-uri) for the file to copy.
-  -source-uri string
-    	A valid gocloud.dev/blob.Bucket URI.
-  -target-path -target-uri
-    	The path (relative to -target-uri) where the target file should be copied.
-  -target-uri string
-    	A valid gocloud.dev/blob.Bucket URI.
+  -source string
+    	The fully-qualified URI for the source file (this will be parsed in to a gocloud.dev/blob.Bucket URI and filename).
+  -target string
+    	The fully-qualified URI for the target file (this will be parsed in to a gocloud.dev/blob.Bucket URI and filename).
+```
+
+#### Example
+
+For example:
+
+```
+$> ./bin/copy -source file:///usr/local/src/gocloud-blob/README.md -target mem:///test.txt
 ```
 
 ### copy-uri
@@ -49,6 +52,8 @@ $> ./bin/copy-uri -h
   -target-uri string
     	A valid gocloud.dev/blob.Bucket URI.
 ```
+
+#### Example
 
 For example:
 
