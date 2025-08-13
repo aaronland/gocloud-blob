@@ -2,6 +2,10 @@
 
 Opinionated methods and tools for working with gocloud.dev/blob instances.
 
+## Deprecation notice
+
+This package has been deprecated and will no longer be updated. It has been replaced by the [aaronland/gocloud](https://github.com/aaronland/gocloud) package.
+
 ## Documentation
 
 Documentation is incomplete at this time.
